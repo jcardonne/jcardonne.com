@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentProps } from "react";
 import Arrow from "@/components/Arrow";
 import ContactForm from "@/components/ContactForm";
+import Flagship from "@/components/Flagship";
 import KineticName from "@/components/KineticName";
 import Nav from "@/components/Nav";
 import Services from "@/components/Services";
@@ -73,7 +73,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const dict = getDictionary(locale);
   const stats = await getGithubStats();
   const number = new Intl.NumberFormat(locale);
-  const { hero, gitchef, deceive, cleanyourtv, client, work } = dict;
+  const { hero, kissaki, gitchef, deceive, cleanyourtv, client, work } = dict;
   const live = {
     version: stats.latestVersion,
     releases: number.format(stats.releases),
@@ -89,13 +89,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     description: dict.meta.description,
     sameAs: [GITHUB_URL],
   };
-
-  const facts = [
-    { label: work.type, value: gitchef.type },
-    { label: work.stack, value: gitchef.stack },
-    { label: work.role, value: gitchef.role },
-    { label: work.license, value: gitchef.license },
-  ];
 
   return (
     <>
@@ -147,79 +140,53 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             {work.title}
           </h2>
 
-          <article
+          <Flagship
+            id="kissaki"
+            surface="surface-ink"
+            title={kissaki.title}
+            fit={0.185}
+            sticker={{
+              name: "cosmic-eye",
+              rotate: -10,
+              className: "right-[3cqw] top-[4.5cqw] w-[12cqw]",
+            }}
+            body={kissaki.body}
+            primary={{ label: kissaki.visit, href: kissaki.url }}
+            facts={kissaki.facts}
+            shots={[
+              { src: "/work/kissaki-home.webp", alt: kissaki.shots.home, width: 2880, height: 1800 },
+              {
+                src: "/work/kissaki-dossier.webp",
+                alt: kissaki.shots.dossier,
+                width: 1240,
+                height: 1008,
+              },
+            ]}
+            features={kissaki.features}
+          />
+
+          <Flagship
             id="gitchef"
-            aria-labelledby="gitchef-title"
-            className={`surface-yellow pb-20 pt-8 md:pb-32 ${GUTTER}`}
-          >
-            <div className="fit relative">
-              <h3 id="gitchef-title" className="display fit-gitchef stretch">
-                {gitchef.title}
-              </h3>
-              <Sticker name="cat" rotate={11} className="right-[2cqw] top-[8cqw] w-[13cqw]" />
-            </div>
-
-            <div className="mt-9 grid gap-x-8 gap-y-10 md:mt-14 md:grid-cols-12">
-              <div className="md:col-span-6">
-                <p className="max-w-[40ch] text-xl leading-snug md:text-2xl">{gitchef.body}</p>
-                <p className="mt-6 text-lg">{rich(gitchef.pace, live)}</p>
-                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-                  <a
-                    href={`${GITCHEF}/releases/latest`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn"
-                  >
-                    {fill(gitchef.download, live)}
-                    <Arrow direction="up-right" />
-                  </a>
-                  <TextLink href={GITCHEF}>{gitchef.repo}</TextLink>
-                </div>
-              </div>
-              <dl className="md:col-span-5 md:col-start-8">
-                {facts.map((fact) => (
-                  <div
-                    key={fact.label}
-                    className="grid grid-cols-[6.5rem_1fr] gap-x-4 border-t border-hair py-3 first:border-ink"
-                  >
-                    <dt className="dim">{fact.label}</dt>
-                    <dd>{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-
-            <figure className="unmask mt-14 border border-ink md:mt-20">
-              <Image
-                src="/work/gitchef-graph.png"
-                alt={gitchef.shots.graph}
-                width={2880}
-                height={1800}
-                sizes="100vw"
-                className="h-auto w-full"
-              />
-            </figure>
-
-            <div className="mt-8 grid gap-x-8 gap-y-10 md:mt-10 md:grid-cols-12">
-              <ul className="md:col-span-4">
-                {gitchef.features.map((feature) => (
-                  <li key={feature.title} className="border-t border-hair py-4 first:border-ink">
-                    <strong className="font-[750]">{feature.title}</strong> {feature.body}
-                  </li>
-                ))}
-              </ul>
-              <figure className="border border-ink md:col-span-8">
-                <Image
-                  src="/work/gitchef-staging.png"
-                  alt={gitchef.shots.staging}
-                  width={2880}
-                  height={1800}
-                  sizes="(min-width: 768px) 66vw, 100vw"
-                  className="h-auto w-full"
-                />
-              </figure>
-            </div>
-          </article>
+            surface="surface-yellow"
+            title={gitchef.title}
+            fit={0.17}
+            sticker={{ name: "cat", rotate: 11, className: "right-[2cqw] top-[5cqw] w-[12cqw]" }}
+            body={gitchef.body}
+            note={rich(gitchef.pace, live)}
+            primary={{ label: fill(gitchef.download, live), href: `${GITCHEF}/releases/latest` }}
+            secondary={{ label: gitchef.repo, href: GITCHEF }}
+            facts={gitchef.facts}
+            shots={[
+              { src: "/work/gitchef-graph.png", alt: gitchef.shots.graph, width: 2880, height: 1800 },
+              {
+                src: "/work/gitchef-staging.png",
+                alt: gitchef.shots.staging,
+                width: 2880,
+                height: 1800,
+              },
+            ]}
+            features={gitchef.features}
+          />
 
           <ul>
             <ProjectRow

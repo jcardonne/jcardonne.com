@@ -4,7 +4,7 @@ const fr: Dictionary = {
   meta: {
     title: "Jean Cardonne, product builder",
     description:
-      "Jean Cardonne conçoit des applications desktop, des produits web et des outils internes, et les livre. Auteur de GitChef, le client Git open source. Disponible en freelance.",
+      "Jean Cardonne conçoit des applications desktop, des produits web et des outils internes, et les livre. Auteur de Kissaki, la plateforme de pentest par IA, et de GitChef, le client Git open source. Disponible en freelance.",
   },
   nav: {
     label: "Principale",
@@ -18,7 +18,7 @@ const fr: Dictionary = {
   hero: {
     statement: "Je construis des logiciels et je les livre.",
     proof:
-      "GitChef, mon client Git open source, en est à la {version} après {releases} versions publiées.",
+      "Kissaki, une plateforme de pentest par IA en accès anticipé. GitChef, un client Git open source arrivé à la {version} après {releases} versions.",
     offer:
       "Je prends des missions freelance : applications desktop, produits web et outils internes.",
     based: "Basé en France. Je travaille en français et en anglais.",
@@ -27,19 +27,51 @@ const fr: Dictionary = {
   },
   work: {
     title: "Projets",
-    type: "Type",
-    stack: "Stack",
-    role: "Rôle",
-    license: "Licence",
+  },
+  kissaki: {
+    title: "Kissaki",
+    body: "Une plateforme de sécurité où des agents IA attaquent vos applications web et vos API comme le ferait un vrai attaquant, puis vous envoient le rapport. Chaque faille prouvée arrive sous forme de dossier : l'exploit rejoué, les empreintes SHA-256 des preuves, et le correctif en brouillon de pull request.",
+    facts: [
+      { label: "Type", value: "Plateforme de sécurité, en accès anticipé" },
+      { label: "Couvre", value: "Pentest par IA, sécurité du code, posture cloud, conformité" },
+      { label: "Programme", value: "Membre de NVIDIA Inception" },
+    ],
+    visit: "Voir kissaki.io",
+    url: "https://kissaki.io/fr",
+    shots: {
+      home: "Page d'accueil de Kissaki : le titre « We attack like a real attacker. Except we send you the report. » au-dessus du tableau de bord du produit",
+      dossier:
+        "Un dossier de preuve Kissaki : une faille critique marquée prouvée, avec ses preuves et le brouillon de pull request qui la corrige",
+    },
+    features: [
+      {
+        title: "Strike.",
+        body: "Des pentests par IA sur les applications web, les API et la surface externe : ponctuels, continus ou à chaque pull request.",
+      },
+      {
+        title: "Code.",
+        body: "Dépendances, SAST, secrets, IaC et CI/CD, avec une barrière qui bloque les failles critiques avant le merge.",
+      },
+      {
+        title: "Cloud.",
+        body: "Posture AWS, chemins d'escalade IAM, images de conteneurs et clusters Kubernetes.",
+      },
+      {
+        title: "Comply.",
+        body: "Les failles rattachées à neuf référentiels, dont NIS2, DORA, ISO 27001 et SOC 2.",
+      },
+    ],
   },
   gitchef: {
     title: "GitChef",
-    type: "Application desktop open source",
     body: "Un client Git desktop écrit avec Tauri, Rust et React. Plusieurs dépôts ouverts en onglets, un graphe de commits, des diffs en ligne et un staging à la ligne près. Il est distribué en installeurs pour macOS, Windows et Linux et se met à jour seul, avec des builds à signature vérifiée.",
     pace: "{commits} commits et {releases} versions depuis juin 2026.",
-    stack: "Tauri, Rust, React, TypeScript",
-    role: "Design, développement, pipeline de release",
-    license: "MIT",
+    facts: [
+      { label: "Type", value: "Application desktop open source" },
+      { label: "Stack", value: "Tauri, Rust, React, TypeScript" },
+      { label: "Rôle", value: "Design, développement, pipeline de release" },
+      { label: "Licence", value: "MIT" },
+    ],
     download: "Télécharger la {version}",
     repo: "Code source sur GitHub",
     shots: {

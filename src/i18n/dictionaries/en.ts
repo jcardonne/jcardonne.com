@@ -2,7 +2,7 @@ const en = {
   meta: {
     title: "Jean Cardonne, product builder",
     description:
-      "Jean Cardonne builds desktop apps, web products and internal tools, and ships them. Maker of GitChef, the open-source Git client. Available for freelance projects.",
+      "Jean Cardonne builds desktop apps, web products and internal tools, and ships them. Maker of Kissaki, the AI pentest platform, and GitChef, the open-source Git client. Available for freelance projects.",
   },
   nav: {
     label: "Main",
@@ -15,7 +15,8 @@ const en = {
   },
   hero: {
     statement: "I build software and ship it.",
-    proof: "GitChef, my open-source Git client, is at {version} after {releases} releases.",
+    proof:
+      "Kissaki, an AI pentest platform in early access. GitChef, an open-source Git client at {version} after {releases} releases.",
     offer: "I take freelance projects: desktop apps, web products and internal tools.",
     based: "Based in France. I work in English and French.",
     primary: "Start a project",
@@ -23,19 +24,51 @@ const en = {
   },
   work: {
     title: "Work",
-    type: "Type",
-    stack: "Stack",
-    role: "Role",
-    license: "License",
+  },
+  kissaki: {
+    title: "Kissaki",
+    body: "A security platform where AI agents attack your web apps and APIs the way a real attacker would, then send you the report. Every proven flaw comes as a dossier: the exploit replayed, SHA-256 fingerprints of the evidence, and the fix as a draft pull request.",
+    facts: [
+      { label: "Type", value: "Security platform, in early access" },
+      { label: "Covers", value: "AI pentest, code security, cloud posture, compliance" },
+      { label: "Program", value: "NVIDIA Inception member" },
+    ],
+    visit: "Visit kissaki.io",
+    url: "https://kissaki.io",
+    shots: {
+      home: "Kissaki homepage: the headline “We attack like a real attacker. Except we send you the report.” above the product dashboard",
+      dossier:
+        "A Kissaki proof dossier: a critical flaw marked proven, with its evidence and the draft pull request that fixes it",
+    },
+    features: [
+      {
+        title: "Strike.",
+        body: "AI pentests on web apps, APIs and the external surface: one-off, continuous, or on each pull request.",
+      },
+      {
+        title: "Code.",
+        body: "Dependencies, SAST, secrets, IaC and CI/CD checks, with a gate that blocks critical flaws before merge.",
+      },
+      {
+        title: "Cloud.",
+        body: "AWS posture, IAM escalation paths, container images and Kubernetes clusters.",
+      },
+      {
+        title: "Comply.",
+        body: "Findings mapped to nine frameworks, NIS2, DORA, ISO 27001 and SOC 2 among them.",
+      },
+    ],
   },
   gitchef: {
     title: "GitChef",
-    type: "Open-source desktop app",
     body: "A desktop Git client written in Tauri, Rust and React. Several repositories open in tabs, a commit graph, inline diffs, and staging down to a single line. It ships as installers for macOS, Windows and Linux and updates itself with signature-verified builds.",
     pace: "{commits} commits and {releases} releases since June 2026.",
-    stack: "Tauri, Rust, React, TypeScript",
-    role: "Design, engineering, release pipeline",
-    license: "MIT",
+    facts: [
+      { label: "Type", value: "Open-source desktop app" },
+      { label: "Stack", value: "Tauri, Rust, React, TypeScript" },
+      { label: "Role", value: "Design, engineering, release pipeline" },
+      { label: "License", value: "MIT" },
+    ],
     download: "Download {version}",
     repo: "Source on GitHub",
     shots: {
