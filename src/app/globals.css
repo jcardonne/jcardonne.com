@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+/* Colours are lifted from the sticker set, so the stickers and the page share one palette. */
+@theme inline {
+  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+
+  --color-paper: #ffffff;
+  --color-ink: #0a0a0a;
+  --color-hair: rgb(10 10 10 / 0.2);
+  --color-blue: #4d3dfd;
+  --color-yellow: #ffd03b;
+  --color-pink: #ff829c;
+  --color-lime: #d4eb8a;
+}
+
+/* Registered so the width axis can be transitioned and scroll-animated. */
+@property --wdth {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 100;
+}
+
+:root {
+  /* Secondary text, re-tinted by each coloured surface. */
+  --dim: #55555c;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+  scrollbar-color: var(--color-ink) var(--color-paper);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-yellow);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+@layer components {
+  /* Heavy condensed capitals: the display voice of the whole site. */
+  .display {
+    --wdth: 66;
+    font-variation-settings:
+      "wdth" var(--wdth),
+      "wght" 800;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+  }
+
+  .fit {
+    container-type: inline-size;
+  }
+
+  /* Sized so the word spans its container at the widest setting of the axis. */
+  .fit-gitchef {
+    --wdth: 125;
+    font-size: calc(100cqw * 0.17);
+    line-height: 0.8;
+    white-space: nowrap;
+  }
+
+  .kinetic-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: calc(100cqw * var(--fit));
+    line-height: 0.76;
+    text-transform: uppercase;
+  }
+
+  .kinetic-letter {
+    font-variation-settings:
+      "wdth" var(--w, 100),
+      "wght" var(--g, 800);
+  }
+
+  .dim {
+    color: var(--dim);
+  }
+
+  /* Highlighter stroke behind a figure. */
+  .mark {
+    background: var(--color-yellow);
+    padding: 0 0.12em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 0.07em;
+    text-underline-offset: 0.22em;
+  }
+
+  .link:hover,
+  .text-link:hover .link {
+    text-decoration-thickness: 0.16em;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    padding: 1rem 1.35rem;
+    font-weight: 650;
+    line-height: 1;
+    transition:
+      background-color 0.15s,
+      color 0.15s;
+  }
+
+  .btn:hover {
+    background: var(--color-blue);
+  }
+
+  .btn:active {
+    translate: 0 1px;
+  }
+
+  .btn:disabled {
+    background: var(--dim);
+    cursor: progress;
+  }
+
+  .field {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    border-radius: 0;
+    background: transparent;
+    padding: 0.5rem 0 0.8rem;
+    font-size: 1.25rem;
+    caret-color: var(--color-yellow);
+  }
+
+  .field::placeholder {
+    color: var(--dim);
+  }
+
+  .field:focus {
+    outline: none;
+    border-bottom-width: 3px;
+    padding-bottom: calc(0.8rem - 2px);
+  }
+
+  .surface-yellow {
+    --dim: #5c4a00;
+    background: var(--color-yellow);
+  }
+
+  .surface-yellow ::selection {
+    background: var(--color-ink);
+    color: var(--color-yellow);
+  }
+
+  .surface-blue {
+    --dim: #e6e3ff;
+    background: var(--color-blue);
+    color: var(--color-paper);
+  }
+
+  .surface-blue .btn {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .surface-blue .btn:hover {
+    background: var(--color-yellow);
+  }
+
+  /* Project rows take a colour of their own when pointed at. */
+  @media (hover: hover) {
+    .row {
+      transition:
+        background-color 0.18s,
+        color 0.18s;
+    }
+
+    .row:hover {
+      --dim: var(--row-dim);
+      background: var(--row-bg);
+      color: var(--row-fg, var(--color-ink));
+    }
+  }
+
+  .row-pink {
+    --row-bg: var(--color-pink);
+    --row-dim: #5e1425;
+  }
+
+  .row-lime {
+    --row-bg: var(--color-lime);
+    --row-dim: #36441a;
+  }
+
+  .row-blue {
+    --row-bg: var(--color-blue);
+    --row-fg: var(--color-paper);
+    --row-dim: #e6e3ff;
+  }
+}
+
+@keyframes stretch {
+  from {
+    --wdth: 62;
+  }
+  to {
+    --wdth: 125;
+  }
+}
+
+@keyframes unmask {
+  from {
+    clip-path: inset(0 16% 0 16%);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .stretch {
+      animation: stretch linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 42%;
+    }
+
+    .unmask {
+      animation: unmask linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 38%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
