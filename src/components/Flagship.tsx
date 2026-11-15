@@ -1,11 +1,7 @@
+import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
 import type { ComponentProps, CSSProperties, ReactNode } from "react";
-import Arrow from "./Arrow";
 import Sticker from "./Sticker";
-import TextLink from "./TextLink";
-
-type Shot = { src: string; alt: string; width: number; height: number };
-type Action = { label: string; href: string };
 
 type Props = {
   id: string;
@@ -18,17 +14,16 @@ type Props = {
    */
   fit: number;
   sticker: ComponentProps<typeof Sticker>;
-  body: string;
-  note?: ReactNode;
-  primary: Action;
-  secondary?: Action;
-  facts: { label: string; value: string }[];
-  /** A wide lead image, then a detail shown beside the feature list. */
-  shots: [Shot, Shot];
-  features: { title: string; body: string }[];
+  body: ReactNode;
+  /** Buttons and links under the description. */
+  actions: ReactNode;
+  /** Optional mark shown beside the description, e.g. a programme badge. */
+  aside?: ReactNode;
+  shot: { src: string; alt: string; width: number; height: number };
+  features: { icon: LucideIcon; title: string; body: string }[];
 };
 
-/** Full-width spread for a headline project. */
+/** Full-width spread for a headline project: name, one paragraph, one image, four features. */
 export default function Flagship({
   id,
   surface,
@@ -36,15 +31,11 @@ export default function Flagship({
   fit,
   sticker,
   body,
-  note,
-  primary,
-  secondary,
-  facts,
-  shots,
+  actions,
+  aside,
+  shot,
   features,
 }: Props) {
-  const [lead, detail] = shots;
-
   return (
     <article
       id={id}
@@ -62,61 +53,34 @@ export default function Flagship({
         <Sticker {...sticker} />
       </div>
 
-      <div className="mt-9 grid gap-x-8 gap-y-10 md:mt-14 md:grid-cols-12">
-        <div className="md:col-span-6">
-          <p className="max-w-[40ch] text-xl leading-snug md:text-2xl">{body}</p>
-          {note && <p className="mt-6 text-lg">{note}</p>}
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-            <a href={primary.href} target="_blank" rel="noreferrer" className="btn">
-              {primary.label}
-              <Arrow direction="up-right" />
-            </a>
-            {secondary && <TextLink href={secondary.href}>{secondary.label}</TextLink>}
-          </div>
+      <div className="mt-9 grid items-end gap-x-8 gap-y-8 md:mt-12 md:grid-cols-12">
+        <div className="md:col-span-7">
+          <p className="max-w-[42ch] text-xl leading-snug md:text-2xl">{body}</p>
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">{actions}</div>
         </div>
-        <dl className="md:col-span-5 md:col-start-8">
-          {facts.map((fact) => (
-            <div
-              key={fact.label}
-              className="hairline grid grid-cols-[6.5rem_1fr] gap-x-4 border-t py-3 first:border-current"
-            >
-              <dt className="dim">{fact.label}</dt>
-              <dd>{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
+        {aside && <div className="md:col-span-4 md:col-start-9 md:justify-self-end">{aside}</div>}
       </div>
 
-      <figure className="unmask mt-14 border border-current md:mt-20">
+      <figure className="unmask mt-12 border border-current md:mt-16">
         <Image
-          src={lead.src}
-          alt={lead.alt}
-          width={lead.width}
-          height={lead.height}
+          src={shot.src}
+          alt={shot.alt}
+          width={shot.width}
+          height={shot.height}
           sizes="100vw"
           className="h-auto w-full"
         />
       </figure>
 
-      <div className="mt-8 grid items-start gap-x-8 gap-y-10 md:mt-10 md:grid-cols-12">
-        <ul className="md:col-span-4">
-          {features.map((feature) => (
-            <li key={feature.title} className="hairline border-t py-4 first:border-current">
-              <strong className="font-[750]">{feature.title}</strong> {feature.body}
-            </li>
-          ))}
-        </ul>
-        <figure className="border border-current md:col-span-8">
-          <Image
-            src={detail.src}
-            alt={detail.alt}
-            width={detail.width}
-            height={detail.height}
-            sizes="(min-width: 768px) 66vw, 100vw"
-            className="h-auto w-full"
-          />
-        </figure>
-      </div>
+      <ul className="mt-10 grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
+        {features.map(({ icon: Icon, title: name, body: text }) => (
+          <li key={name}>
+            <Icon aria-hidden="true" strokeWidth={2} className="size-6" />
+            <h4 className="mt-3 font-[750]">{name}</h4>
+            <p className="dim mt-1">{text}</p>
+          </li>
+        ))}
+      </ul>
     </article>
   );
 }

@@ -29,6 +29,57 @@ function clean(value: unknown, max: number): string {
 
 const fail = (error: string, status: number) => NextResponse.json({ error }, { status });
 
+/**
+ * Checks a Cloudflare Turnstile token. Skipped when no secret is configured,
+ * so the form keeps working locally and before the widget is set up.
+ */
+async function passesTurnstile(token: string, ip: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return true;
+  if (!token) return false;
+  try {
+    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: new URLSearchParams({ secret, response: token, ...(ip === "unknown" ? {} : { remoteip: ip }) }),
+    });
+    const result = (await res.json()) as { success?: boolean };
+    return result.success === true;
+  } catch {
+    return false;
+  }
+}
+
+const MAX_ATTEMPTS = 3;
+const MAX_WAIT_MS = 5000;
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Posts to a Discord webhook, retrying on rate limits (429) and server errors (5xx). */
+async function postToDiscord(webhook: string, payload: string): Promise<boolean> {
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    let wait = 500 * 2 ** (attempt - 1);
+    try {
+      const res = await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      });
+      if (res.ok) return true;
+      if (res.status !== 429 && res.status < 500) return false;
+      if (res.status === 429) {
+        // Discord gives the delay in seconds, in the body and in Retry-After.
+        const body = (await res.json().catch(() => ({}))) as { retry_after?: number };
+        const seconds = body.retry_after ?? Number(res.headers.get("retry-after"));
+        if (Number.isFinite(seconds) && seconds > 0) wait = seconds * 1000;
+      }
+    } catch {
+      // Network error: retry with backoff.
+    }
+    if (attempt === MAX_ATTEMPTS || wait > MAX_WAIT_MS) return false;
+    await sleep(wait);
+  }
+  return false;
+}
+
 export async function POST(request: Request) {
   const origin = request.headers.get("origin");
   const host = request.headers.get("host");
@@ -57,26 +108,29 @@ export async function POST(request: Request) {
   const message = clean(body.message, 5000);
   if (!name || !EMAIL.test(email) || message.length < 10) return fail("invalid", 422);
 
-  const key = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO;
-  if (!key || !to) return fail("not_configured", 503);
-
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from: process.env.CONTACT_FROM || "jcardonne.com <onboarding@resend.dev>",
-        to: [to],
-        reply_to: email,
-        subject: `Portfolio: message from ${name}`,
-        text: `${message}\n\n${name} <${email}>`,
-      }),
-    });
-    if (!res.ok) return fail("send_failed", 502);
-  } catch {
-    return fail("send_failed", 502);
+  if (!(await passesTurnstile(clean(body["cf-turnstile-response"], 2048), ip))) {
+    return fail("challenge_failed", 403);
   }
+
+  const webhook = process.env.DISCORD_WEBHOOK_URL;
+  if (!webhook) return fail("not_configured", 503);
+
+  const payload = JSON.stringify({
+    username: "jcardonne.com",
+    // Visitor text must never ping @everyone, roles or users.
+    allowed_mentions: { parse: [] },
+    embeds: [
+      {
+        title: `New message from ${name}`.slice(0, 256),
+        description: message.slice(0, 4000),
+        color: 0x4d3dfd,
+        fields: [{ name: "Reply to", value: email }],
+        timestamp: new Date().toISOString(),
+      },
+    ],
+  });
+
+  if (!(await postToDiscord(webhook, payload))) return fail("send_failed", 502);
 
   return NextResponse.json({ ok: true });
 }

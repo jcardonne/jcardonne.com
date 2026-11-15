@@ -17,11 +17,7 @@ const fr: Dictionary = {
   },
   hero: {
     statement: "Je construis des logiciels et je les livre.",
-    proof:
-      "Kissaki, une plateforme de pentest par IA en accès anticipé. GitChef, un client Git open source arrivé à la {version} après {releases} versions.",
-    offer:
-      "Je prends des missions freelance : applications desktop, produits web et outils internes.",
-    based: "Basé en France. Je travaille en français et en anglais.",
+    offer: "Disponible en freelance : applications desktop, produits web et outils internes. Basé en France.",
     primary: "Démarrer un projet",
     secondary: "Voir les projets",
   },
@@ -30,95 +26,50 @@ const fr: Dictionary = {
   },
   kissaki: {
     title: "Kissaki",
-    body: "Une plateforme de sécurité où des agents IA attaquent vos applications web et vos API comme le ferait un vrai attaquant, puis vous envoient le rapport. Chaque faille prouvée arrive sous forme de dossier : l'exploit rejoué, les empreintes SHA-256 des preuves, et le correctif en brouillon de pull request.",
-    facts: [
-      { label: "Type", value: "Plateforme de sécurité, en accès anticipé" },
-      { label: "Couvre", value: "Pentest par IA, sécurité du code, posture cloud, conformité" },
-      { label: "Programme", value: "Membre de NVIDIA Inception" },
-    ],
+    body: "Des agents IA attaquent vos applications web et vos API comme un vrai attaquant, puis vous envoient le rapport : la preuve de chaque faille et son correctif en pull request.",
+    status: "En accès anticipé",
+    inception: "Membre du programme NVIDIA Inception",
     visit: "Voir kissaki.io",
     url: "https://kissaki.io/fr",
-    shots: {
-      home: "Page d'accueil de Kissaki : le titre « We attack like a real attacker. Except we send you the report. » au-dessus du tableau de bord du produit",
-      dossier:
-        "Un dossier de preuve Kissaki : une faille critique marquée prouvée, avec ses preuves et le brouillon de pull request qui la corrige",
-    },
+    shot: "Page d'accueil de Kissaki : le titre « We attack like a real attacker. Except we send you the report. » au-dessus du tableau de bord du produit",
     features: [
-      {
-        title: "Strike.",
-        body: "Des pentests par IA sur les applications web, les API et la surface externe : ponctuels, continus ou à chaque pull request.",
-      },
-      {
-        title: "Code.",
-        body: "Dépendances, SAST, secrets, IaC et CI/CD, avec une barrière qui bloque les failles critiques avant le merge.",
-      },
-      {
-        title: "Cloud.",
-        body: "Posture AWS, chemins d'escalade IAM, images de conteneurs et clusters Kubernetes.",
-      },
-      {
-        title: "Comply.",
-        body: "Les failles rattachées à neuf référentiels, dont NIS2, DORA, ISO 27001 et SOC 2.",
-      },
+      { title: "Strike", body: "Pentests par IA sur vos applications, API et surface externe." },
+      { title: "Code", body: "Analyse du code, des dépendances et des secrets, bloquée avant le merge." },
+      { title: "Cloud", body: "Posture AWS, chemins IAM, conteneurs et Kubernetes." },
+      { title: "Comply", body: "Failles rattachées à NIS2, DORA, ISO 27001 et SOC 2." },
     ],
   },
   gitchef: {
     title: "GitChef",
-    body: "Un client Git desktop écrit avec Tauri, Rust et React. Plusieurs dépôts ouverts en onglets, un graphe de commits, des diffs en ligne et un staging à la ligne près. Il est distribué en installeurs pour macOS, Windows et Linux et se met à jour seul, avec des builds à signature vérifiée.",
-    pace: "{commits} commits et {releases} versions depuis juin 2026.",
-    facts: [
-      { label: "Type", value: "Application desktop open source" },
-      { label: "Stack", value: "Tauri, Rust, React, TypeScript" },
-      { label: "Rôle", value: "Design, développement, pipeline de release" },
-      { label: "Licence", value: "MIT" },
-    ],
+    body: "Un client Git rapide et open source pour macOS, Windows et Linux, construit avec Tauri, Rust et React. {commits} commits et {releases} versions depuis juin 2026.",
     download: "Télécharger la {version}",
-    repo: "Code source sur GitHub",
-    shots: {
-      graph:
-        "Graphe de commits de GitChef avec branches, tags et stashes, à côté du détail d'un commit",
-      staging:
-        "Vue de staging de GitChef avec un diff en ligne à côté du panneau de staging et de l'éditeur de commit",
-    },
+    repo: "Code source",
+    shot: "Graphe de commits de GitChef avec branches, tags et stashes, à côté du détail d'un commit",
     features: [
-      {
-        title: "Graphe de commits.",
-        body: "Branches, tags, remotes et stashes dans un seul historique, avec les vrais avatars des auteurs.",
-      },
-      {
-        title: "Staging à la ligne.",
-        body: "Indexez un bloc ou une seule ligne à côté du diff, puis commitez depuis la même vue.",
-      },
-      {
-        title: "Conflits.",
-        body: "Les conflits de merge et de rebase se résolvent en ligne, côte à côte.",
-      },
-      {
-        title: "Pull requests.",
-        body: "Ouvrez une PR GitHub ou une MR GitLab et suivez la revue et la CI depuis la barre latérale.",
-      },
+      { title: "Graphe de commits", body: "Branches, tags et stashes dans un seul historique." },
+      { title: "Staging à la ligne", body: "Indexez une seule ligne directement depuis le diff." },
+      { title: "Conflits", body: "Résolvez merges et rebases côte à côte." },
+      { title: "Pull requests", body: "Ouvrez des PR et suivez la CI depuis la barre latérale." },
     ],
   },
   deceive: {
     title: "Deceive pour macOS",
-    type: "Application macOS open source",
-    body: "Apparaître hors ligne dans League of Legends, Teamfight Tactics et Legends of Runeterra sur Mac, en gardant le chat de salon et les invitations. Un portage en barre de menus de l'outil Windows Deceive : on télécharge, on glisse dans Applications, on joue.",
-    stack: "Python, GitHub Actions",
+    meta: "Application macOS open source",
+    body: "Apparaître hors ligne dans League of Legends sur Mac en gardant le chat et les invitations. Un portage en barre de menus de l'outil Windows Deceive.",
     download: "Télécharger",
-    repo: "Code source sur GitHub",
+    repo: "Code source",
   },
   cleanyourtv: {
     title: "CleanYourTV",
-    type: "Contribution open source",
-    body: "Le projet de Gathin23 retire les bloatwares des Android TV et Google TV en Wi-Fi et remplace l'écran d'accueil rempli de publicités. Ma part : la liste de nettoyage du Sony BRAVIA 4K, fusionnée dans la pull request 154.",
-    stack: "ADB, Android TV",
+    meta: "Contribution open source",
+    body: "Retire les publicités et bloatwares des Android TV. J'y ai ajouté la liste de nettoyage du Sony BRAVIA 4K.",
     pr: "Pull request 154",
     site: "cleanyour.tv",
   },
   client: {
     title: "Missions client",
-    type: "Privé",
-    body: "Une partie de ce que je construis appartient à mes clients et reste privée. Demandez, et je vous en montre ce que je peux lors d'un appel.",
+    meta: "Privé",
+    body: "Une partie de ce que je construis reste privée. Demandez, je vous en montre ce que je peux en appel.",
     cta: "En parler",
   },
   services: {
@@ -126,32 +77,25 @@ const fr: Dictionary = {
     items: [
       {
         title: "Applications desktop",
-        body: "Tauri, Rust et React. Installeurs, mises à jour automatiques et pipeline de release font partie du travail, sur macOS, Windows et Linux.",
+        body: "Tauri, Rust et React, livrées avec installeurs et mises à jour automatiques.",
       },
       {
         title: "Produits web",
-        body: "Interface, API, données et hébergement, du premier prototype à la production. TypeScript ou Go.",
+        body: "Interface, API, données et hébergement, du prototype à la production.",
       },
       {
         title: "Outils internes",
-        body: "CLI, automatisations et intégrations qui retirent des étapes manuelles à votre équipe.",
+        body: "CLI, automatisations et intégrations qui font gagner du temps à votre équipe.",
       },
     ],
     processTitle: "Comment se déroule un projet",
-    process: [
-      "Un appel pour comprendre le problème et ses contraintes.",
-      "Un cadrage écrit avec un calendrier et un prix, avant le début du travail.",
-      "Des builds fonctionnels que vous testez pendant que le projet avance.",
-      "Une passation : du code documenté et un pipeline que votre équipe fait tourner.",
-    ],
+    process: ["Un appel", "Un cadrage écrit avec un prix", "Des builds au fil de l'eau", "Une passation propre"],
   },
   stats: {
     title: "En public",
-    sentence:
-      "{commits} commits et {releases} versions de GitChef, la dernière le {date}. {repos} dépôts publics, {stars} étoiles et {followers} abonnés sur GitHub.",
-    languages: "GitChef, c'est {list}.",
-    live: "Lu dans l'API GitHub et actualisé toutes les heures.",
-    snapshot: "GitHub est injoignable, ces chiffres datent donc du 14 novembre 2026.",
+    sentence: "{commits} commits et {releases} versions de GitChef. {repos} dépôts publics sur GitHub.",
+    live: "En direct de l'API GitHub, actualisé toutes les heures.",
+    snapshot: "GitHub est injoignable ; chiffres du 14 novembre 2026.",
     profile: "Profil GitHub",
   },
   contact: {
@@ -170,7 +114,6 @@ const fr: Dictionary = {
     elsewhere: "Ailleurs",
   },
   footer: {
-    colophon: "Composé en Archivo. Construit avec Next.js.",
     top: "Retour en haut",
   },
 };

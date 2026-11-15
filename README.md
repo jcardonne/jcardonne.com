@@ -15,9 +15,9 @@ pnpm dev
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `RESEND_API_KEY` | for the contact form | API key from [Resend](https://resend.com). Without it `/api/contact` answers 503. |
-| `CONTACT_TO` | for the contact form | Address that receives the messages. |
-| `CONTACT_FROM` | no | Sender on a domain verified in Resend. Defaults to Resend's test sender, which only delivers to the account owner. |
+| `DISCORD_WEBHOOK_URL` | for the contact form | Discord webhook that receives each message. Without it `/api/contact` answers 503. |
+| `TURNSTILE_SECRET_KEY` | no | Secret of an invisible [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) widget. When set, the contact route rejects messages without a valid token. |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | with the secret | Public site key of the same widget, read at build time. |
 | `GITHUB_TOKEN` | no | Raises the GitHub API rate limit for the live stats. |
 
 ## Where things live

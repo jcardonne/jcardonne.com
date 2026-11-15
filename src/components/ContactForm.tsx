@@ -1,5 +1,6 @@
 "use client";
 
+import Script from "next/script";
 import { useState, type FormEvent } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import Arrow from "./Arrow";
@@ -7,6 +8,15 @@ import Arrow from "./Arrow";
 type Status = "idle" | "sending" | "success" | "invalid" | "rateLimited" | "error";
 
 const STATUS_BY_CODE: Record<number, Status> = { 422: "invalid", 429: "rateLimited" };
+
+// Public site key of an invisible Cloudflare Turnstile widget. Without it the form posts unchallenged.
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+declare global {
+  interface Window {
+    turnstile?: { reset: (widget?: string | HTMLElement) => void };
+  }
+}
 
 export default function ContactForm({ dict }: { dict: Dictionary["contact"] }) {
   const [status, setStatus] = useState<Status>("idle");
@@ -31,6 +41,8 @@ export default function ContactForm({ dict }: { dict: Dictionary["contact"] }) {
     } catch {
       setStatus("error");
     }
+    // Turnstile tokens are single-use: fetch a fresh one for the next attempt.
+    window.turnstile?.reset();
   }
 
   const sending = status === "sending";
@@ -71,6 +83,13 @@ export default function ContactForm({ dict }: { dict: Dictionary["contact"] }) {
         {dict.website}
         <input name="website" tabIndex={-1} autoComplete="off" />
       </label>
+      {TURNSTILE_SITE_KEY && (
+        <>
+          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
+          {/* The script fills a hidden `cf-turnstile-response` field in this form. */}
+          <div className="cf-turnstile absolute" data-sitekey={TURNSTILE_SITE_KEY} />
+        </>
+      )}
       <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
         <button type="submit" className="btn" disabled={sending}>
           {sending ? dict.sending : dict.send}
